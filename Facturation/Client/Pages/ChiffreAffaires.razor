@@ -1,0 +1,49 @@
+﻿@page "/ca"
+@using Facturation.Shared
+@inject IBusinessData ListCA
+
+<h1>Chiffres d'Affaires</h1>
+
+@*<p>Liste des Factures</p>*@
+
+@*@if (factures2.Count == 0)*@
+@if (ListCA.CAs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Année</th>
+                <th>Chiffre d'Affaires Dû</th>
+                <th>Chiffre d'Affaires Réglé</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (ChiffreAffaire ca in ListCA.CAs)
+            {
+            <tr>
+                <td>@ca.getYear()</td>
+                <td>@ca.chiffreAffairesD</td>
+                <td>@ca.chiffreAffairesR</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+@*
+    @code {
+        private List<Facture> factures2;
+        // private Facture[] factures;
+        private WeatherForecast[] forecasts;
+
+        protected override async Task OnInitializedAsync()
+        {
+            factures2 = await BusinessData. < List < Facture >> ("Facture");
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        }
+
+    }*@

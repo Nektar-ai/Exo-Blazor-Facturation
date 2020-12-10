@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Facturation.Shared
+{
+    public class BusinessData : IBusinessData
+    {
+        List<Facture> listeFactures;
+        List<ChiffreAffaire> listeCas;
+        public BusinessData()
+        {
+            listeFactures = new List<Facture>();
+            loadFactures();
+            listeCas = new List<ChiffreAffaire>();
+            loadCAs();
+        }
+
+        public List<Facture> getListFac()
+        {
+            return this.listeFactures;
+        }
+        public void loadFactures()
+        {
+            Facture f11 = new Facture("F0011", "Laurent Varden", new DateTime(2020, 12, 01), new DateTime(2020, 12, 10), 15000, 0);
+            Facture f10 = new Facture("F0010", "John Doe", new DateTime(2020, 11, 2), new DateTime(2020, 12, 2), 37575, 37575);
+            Facture f9 = new Facture("F009", "Gil Pybert", new DateTime(2020, 10, 15), new DateTime(2020, 11, 25), 7950, 7950);
+            Facture f8 = new Facture("F008", "Gil Pybert", new DateTime(2020, 05, 15), new DateTime(2020, 07, 25), 9522, 9522);
+            Facture f7 = new Facture("F007", "John Cologne", new DateTime(2020, 12, 10), new DateTime(), 4550, 0);
+            Facture f6 = new Facture("F006", "Floyd Jenkins", new DateTime(2019, 05, 2), new DateTime(2019, 6, 18), 6253, 6253);
+            Facture f5 = new Facture("F005", "Luis Juarez", new DateTime(2019, 05, 2), new DateTime(2019, 6, 18), 23517, 23517);
+            Facture f4 = new Facture("F004", "Franz Helke", new DateTime(2019, 01, 17), new DateTime(2019, 02, 5), 6253, 6253);
+            Facture f3 = new Facture("F003", "Jean Fonce", new DateTime(2019, 02, 15), new DateTime(2019, 5, 3), 17523, 17523);
+            Facture f2 = new Facture("F002", "John Cologne", new DateTime(2018, 09, 10), new DateTime(2018, 10, 25), 12578, 12578);
+            Facture f1 = new Facture("F001", "John Cologne", new DateTime(2018, 02, 10), new DateTime(2018, 04, 25), 15535, 15535);
+
+            this.listeFactures.Add(f1);
+            this.listeFactures.Add(f2);
+            this.listeFactures.Add(f3);
+            this.listeFactures.Add(f4);
+            this.listeFactures.Add(f5);
+            this.listeFactures.Add(f6);
+            this.listeFactures.Add(f7);
+            this.listeFactures.Add(f8);
+            this.listeFactures.Add(f9);
+            this.listeFactures.Add(f10);
+            this.listeFactures.Add(f11);
+        }
+
+        // Je suis partis sur un Chiffre d'Affaire annuel plûtôt que Mensuel (pas par rébellion, je n'avais pas vu qu'il fallait le faire en mensuel.. j'ai 
+        // pensé mettre une valeur ajoutée en faisant le projet sur plusieurs années, puis vers la fin, j'ai réalisé que vous demandiez un mensuel..)
+
+        public void loadCAs()
+        {
+            ChiffreAffaire ca2018 = new ChiffreAffaire("2018");
+            ChiffreAffaire ca2019 = new ChiffreAffaire("2019");
+            ChiffreAffaire ca2020 = new ChiffreAffaire("2020");
+
+
+            foreach (Facture f in listeFactures)
+            {
+                if (f.dateEmission.Year == 2018)
+                {
+                    ca2018.chiffreAffairesD += f.montantDu;
+                    ca2018.chiffreAffairesR += f.montantRegle;
+                }
+                else if (f.dateEmission.Year == 2019)
+                {
+                    ca2019.chiffreAffairesD += f.montantDu;
+                    ca2019.chiffreAffairesR += f.montantRegle;
+                }
+                else if (f.dateEmission.Year == 2020)
+                {
+                    ca2020.chiffreAffairesD += f.montantDu;
+                    ca2020.chiffreAffairesR += f.montantRegle;
+                }
+            }
+            this.listeCas.Add(ca2018);
+            this.listeCas.Add(ca2019);
+            this.listeCas.Add(ca2020);
+
+        }
+
+        // J'ai Passé des heures à essayer de fonctionner par Dictionnaire
+        // Malheureusement, je n'ai jamais vu la notion, il est maintenant 1h du mat, j'abandonne
+        // (Je voulais créer des objets ChiffreAffaire dynamiques suivant la valeur année dans la Date de Facture
+        // Je me rabats donc sur des objets ChiffreAffaire instanciés en Dur..
+
+
+
+        /*       public List<ChiffreAffaire> GenerateCAs(List<Facture> fL)
+               {
+                   Dictionary<string, ChiffreAffaire> dicoCA = new Dictionary<string, ChiffreAffaire>();
+                   List<ChiffreAffaire> listCA = new List<ChiffreAffaire>();
+
+                   foreach (Facture facture in fL)
+                   {
+                       string year = facture.getDateR().Substring(facture.getDateR().Length - 4);
+
+                       if (!dicoCA.ContainsKey("ca" + year))
+                       {
+                           dicoCA.Add("ca" + year, new ChiffreAffaire(year));
+                       }
+                       ChiffreAffaire ca = dicoCA.GetValueOrDefault("ca" + year);
+                       ca.listFac.Add(facture);
+                   }
+
+                   foreach (KeyValuePair<string, ChiffreAffaire> ca in dicoCA)
+                   {
+                       listCA.Add(ca.Value);
+                   }
+
+                   return listCA;
+               }*/
+
+        public IEnumerable<Facture> Factures => listeFactures;
+        public IEnumerable<ChiffreAffaire> CAs => listeCas;
+    }
+
+}

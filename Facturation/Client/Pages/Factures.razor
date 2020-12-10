@@ -1,0 +1,68 @@
+﻿@page "/facture"
+@using Facturation.Shared
+@inject IBusinessData Fac
+
+<h1>Factures</h1>
+
+@*<p>Liste des Factures</p>*@
+
+@*@if (factures2.Count == 0)*@
+@if (Fac.Factures == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Client</th>
+                <th>Montant dû</th>
+                <th>Montant Réglé</th>
+                <th>Date Emission</th>
+                <th>Date Règlement</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*@foreach (var forecast in forecasts)
+                {
+                    <tr>
+                        <td>@forecast.Date.ToShortDateString()</td>
+                        <td>@forecast.TemperatureC</td>
+                        <td>@forecast.TemperatureF</td>
+                        <td>@forecast.Summary</td>
+                    </tr>
+                }*@
+
+            @foreach (var facture in Fac.Factures)
+            {
+                <tr>
+                    <td>@facture.code</td>
+                    <td>@facture.client</td>
+                    <td>@facture.montantDu €</td>
+                    <td>@facture.montantRegle €</td>
+                    <td>@facture.getDateE()</td>
+                    @if (facture.getMontantR() != 0)
+                    {
+                        <td>@facture.getDateR()</td>
+                    }
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@*
+    @code {
+        private List<Facture> factures2;
+        // private Facture[] factures;
+        private WeatherForecast[] forecasts;
+
+        protected override async Task OnInitializedAsync()
+        {
+            factures2 = await BusinessData. < List < Facture >> ("Facture");
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        }
+
+    }*@

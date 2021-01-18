@@ -1,4 +1,4 @@
-﻿@page "/api/factures/{code}"
+﻿@*@page "/api/factures/{code}"*@
 @using Facturation.Shared
 @*@inject IBusinessData Fac*@
 @inject HttpClient http
@@ -42,15 +42,18 @@
 
 @code {
 
-    DateTime dateNow = DateTime.Now;
-    @*FactureDTO fac = new FactureDTO();*@
+    @*DateTime dateNow = DateTime.Now;*@
+    FactureDTO fac = new FactureDTO();
 
-    Facture fac = _data.Factures.Where(fac => fac.code == code).FirstOrDefault();
+    @*Facture fac = _data.Factures.Where(fac => fac.code == code).FirstOrDefault();*@
 
-    private void validFac()
-    {
-        @*data.addFac();*@
-    }
+private IEnumerable<Facture> allFactures = null;
+
+@*protected override async Task OnInitializedAsync()
+{
+    fac = await http.GetFromJsonAsync<Facture>("api/factures/");
+}*@
+
 }
 
 

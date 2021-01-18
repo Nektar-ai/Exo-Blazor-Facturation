@@ -44,7 +44,7 @@ namespace Facturation.Shared
             return this.year;
         }
 
-/*        public double getCAD()
+        public double getCAD()
         {
             return this.chiffreAffairesD;
         }
@@ -52,26 +52,26 @@ namespace Facturation.Shared
         public double getCAR()
         {
             return this.chiffreAffairesR;
-        }*/
-
-
-/*
-        public void CalculerCAD()
-        {
-            foreach (Facture f in this.listFac)
-            {
-                this.chiffreAffairesD += f.getMontantD();
-            }
-
         }
 
-        public void CalculerCAR()
-        {
-            foreach (Facture f in this.listFac)
-            {
-                this.chiffreAffairesR += f.getMontantR();
-            }
 
-        }*/
+        /*
+                public void CalculerCAD()
+                {
+                    foreach (Facture f in this.listFac)
+                    {
+                        this.chiffreAffairesD += f.getMontantD();
+                    }
+
+                }
+
+                public void CalculerCAR()
+                {
+                    foreach (Facture f in this.listFac)
+                    {
+                        this.chiffreAffairesR += f.getMontantR();
+                    }
+
+                }*/
     }
 }

@@ -17,6 +17,10 @@ namespace Facturation.Shared
             loadCAs();
         }
 
+        public List<ChiffreAffaire> getListCas()
+        {
+            return this.listeCas;
+        }
         public List<Facture> getListFac()
         {
             return this.listeFactures;

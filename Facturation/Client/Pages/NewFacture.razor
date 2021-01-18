@@ -1,17 +1,17 @@
 ﻿@page "/newfacture"
-@using Facturation.Shared
-@*@inject IBusinessData Fac*@
+
 @inject HttpClient http
 @inject NavigationManager nav
-@*@inject BusinessData data*@
+
+@using Facturation.Shared
 
 <h1>Creation Facture</h1>
 <br />
 @if (LastSubmitResult != null)
 {
-    <h4>
-        Last submit status: @LastSubmitResult
-    </h4>
+    <h5>
+        Form submit status: @LastSubmitResult
+    </h5>
 }
 <br />
 @*@{Facture facture = new Facture}*@
@@ -29,7 +29,7 @@
                     <label for="code"> Numero </label>
                 </td>
                 <td>
-                    <input type="text" @bind=facture.code/>
+                    <input type="text" @bind=facture.code />
                 </td>
             </tr>
             <br />
@@ -81,32 +81,26 @@
 </EditForm>
 @code {
 
-    DateTime dateNow = DateTime.Now;
     FactureDTO facture = new FactureDTO();
 
     string LastSubmitResult;
 
-    protected async Task CreateFacture()
+@*    protected async Task CreateFacture()
     {
-        await http.SendJsonAsync(HttpMethod.Post, "/api/factures", facture);
-        await http.
+                await http.SendJsonAsync(HttpMethod.Post, "/api/factures", facture);
+            await http.
 
-    }
+    }*@
 
     void ValidFormSubmitted(EditContext editContext)
     {
         LastSubmitResult = "Formulaire Valide !";
-        CreateFacture();
+        @*CreateFacture();*@
     }
     void InvalidFormSubmitted(EditContext editContext)
     {
         LastSubmitResult = "Formulaire Invalide !";
 
-    }
-
-    private void validFac()
-    {
-        @*data.addFac();*@
     }
 }
 

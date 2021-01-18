@@ -14,6 +14,8 @@ namespace Facturation.Shared
         public List<Facture> listFac { set; get; }
         public string year { get; set; }
 
+        public ChiffreAffaire() { }
+
         public ChiffreAffaire(string y, List<Facture> listF)
         {
             this.year = y;

@@ -23,8 +23,8 @@ namespace Facturation.Shared
         }
         public void loadFactures()
         {
-            Facture f11 = new Facture("F0011", "Laurent Varden", new DateTime(2020, 12, 01), new DateTime(2020, 12, 10), 15000, 0);
-            Facture f10 = new Facture("F0010", "John Doe", new DateTime(2020, 11, 2), new DateTime(2020, 12, 2), 37575, 37575);
+            Facture f11 = new Facture("F011", "Laurent Varden", new DateTime(2020, 12, 01), new DateTime(2020, 12, 10), 15000, 0);
+            Facture f10 = new Facture("F010", "John Doe", new DateTime(2020, 11, 2), new DateTime(2020, 12, 2), 37575, 37575);
             Facture f9 = new Facture("F009", "Gil Pybert", new DateTime(2020, 10, 15), new DateTime(2020, 11, 25), 7950, 7950);
             Facture f8 = new Facture("F008", "Gil Pybert", new DateTime(2020, 05, 15), new DateTime(2020, 07, 25), 9522, 9522);
             Facture f7 = new Facture("F007", "John Cologne", new DateTime(2020, 12, 10), new DateTime(), 4550, 0);
@@ -57,23 +57,25 @@ namespace Facturation.Shared
             ChiffreAffaire ca2019 = new ChiffreAffaire("2019");
             ChiffreAffaire ca2020 = new ChiffreAffaire("2020");
 
-
             foreach (Facture f in listeFactures)
             {
                 if (f.dateEmission.Year == 2018)
                 {
                     ca2018.chiffreAffairesD += f.montantDu;
                     ca2018.chiffreAffairesR += f.montantRegle;
+                    /*ca2018.listFac.Add(f);*/
                 }
                 else if (f.dateEmission.Year == 2019)
                 {
                     ca2019.chiffreAffairesD += f.montantDu;
                     ca2019.chiffreAffairesR += f.montantRegle;
+                    /*ca2019.listFac.Add(f);*/
                 }
                 else if (f.dateEmission.Year == 2020)
                 {
                     ca2020.chiffreAffairesD += f.montantDu;
                     ca2020.chiffreAffairesR += f.montantRegle;
+                    /*ca2020.listFac.Add(f);*/
                 }
             }
             this.listeCas.Add(ca2018);
@@ -82,40 +84,51 @@ namespace Facturation.Shared
 
         }
 
-        // J'ai Passé des heures à essayer de fonctionner par Dictionnaire
-        // Malheureusement, je n'ai jamais vu la notion, il est maintenant 1h du mat, j'abandonne
-        // (Je voulais créer des objets ChiffreAffaire dynamiques suivant la valeur année dans la Date de Facture
-        // Je me rabats donc sur des objets ChiffreAffaire instanciés en Dur..
+        public void addFac(FactureDTO factureDTO)
+        {
+            Facture fac = new Facture(factureDTO);
+            this.listeFactures.Add(fac);
+            foreach (var f in listeFactures)
+            {
+                Console.WriteLine(f.code);
+            }
+        }
 
-
-
-        /*       public List<ChiffreAffaire> GenerateCAs(List<Facture> fL)
-               {
-                   Dictionary<string, ChiffreAffaire> dicoCA = new Dictionary<string, ChiffreAffaire>();
-                   List<ChiffreAffaire> listCA = new List<ChiffreAffaire>();
-
-                   foreach (Facture facture in fL)
-                   {
-                       string year = facture.getDateR().Substring(facture.getDateR().Length - 4);
-
-                       if (!dicoCA.ContainsKey("ca" + year))
-                       {
-                           dicoCA.Add("ca" + year, new ChiffreAffaire(year));
-                       }
-                       ChiffreAffaire ca = dicoCA.GetValueOrDefault("ca" + year);
-                       ca.listFac.Add(facture);
-                   }
-
-                   foreach (KeyValuePair<string, ChiffreAffaire> ca in dicoCA)
-                   {
-                       listCA.Add(ca.Value);
-                   }
-
-                   return listCA;
-               }*/
 
         public IEnumerable<Facture> Factures => listeFactures;
         public IEnumerable<ChiffreAffaire> CAs => listeCas;
     }
 
 }
+
+// J'ai Passé des heures à essayer de fonctionner par Dictionnaire
+// Malheureusement, je n'ai jamais vu la notion, il est maintenant 1h du mat, j'abandonne
+// (Je voulais créer des objets ChiffreAffaire dynamiques suivant la valeur année dans la Date de Facture
+// Je me rabats donc sur des objets ChiffreAffaire instanciés en Dur..
+
+
+
+/*       public List<ChiffreAffaire> GenerateCAs(List<Facture> fL)
+       {
+           Dictionary<string, ChiffreAffaire> dicoCA = new Dictionary<string, ChiffreAffaire>();
+           List<ChiffreAffaire> listCA = new List<ChiffreAffaire>();
+
+           foreach (Facture facture in fL)
+           {
+               string year = facture.getDateR().Substring(facture.getDateR().Length - 4);
+
+               if (!dicoCA.ContainsKey("ca" + year))
+               {
+                   dicoCA.Add("ca" + year, new ChiffreAffaire(year));
+               }
+               ChiffreAffaire ca = dicoCA.GetValueOrDefault("ca" + year);
+               ca.listFac.Add(facture);
+           }
+
+           foreach (KeyValuePair<string, ChiffreAffaire> ca in dicoCA)
+           {
+               listCA.Add(ca.Value);
+           }
+
+           return listCA;
+       }*/

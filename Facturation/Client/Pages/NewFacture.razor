@@ -1,0 +1,114 @@
+﻿@page "/newfacture"
+@using Facturation.Shared
+@*@inject IBusinessData Fac*@
+@inject HttpClient http
+@inject NavigationManager nav
+@*@inject BusinessData data*@
+
+<h1>Creation Facture</h1>
+<br />
+@if (LastSubmitResult != null)
+{
+    <h4>
+        Last submit status: @LastSubmitResult
+    </h4>
+}
+<br />
+@*@{Facture facture = new Facture}*@
+<EditForm Model=@facture OnValidSubmit=@ValidFormSubmitted OnInvalidSubmit=@InvalidFormSubmitted>
+    <DataAnnotationsValidator />
+    <table class="table" style="width:100%; border:none">
+        <colgroup>
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 50%;">
+        </colgroup>
+        <tbody>
+
+            <tr>
+                <td>
+                    <label for="code"> Numero </label>
+                </td>
+                <td>
+                    <input type="text" @bind=facture.code/>
+                </td>
+            </tr>
+            <br />
+            <tr>
+                <td>
+                    <label for="client"> Client </label>
+                </td>
+                <td>
+                    <input type="text" @bind=facture.client />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="dateEmission"> Date Emission </label>
+                </td>
+                <td>
+                    <input type="date" @bind-value=facture.dateEmission />
+                </td>
+            </tr>
+            <br />
+            <tr>
+                <td>
+                    <label for="dateReglement"> Date Reglement </label>
+                </td>
+                <td>
+                    <input type="date" @bind=facture.dateReglement />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="montantDu"> Montant Dû </label>
+                </td>
+                <td>
+                    <input type="number" @bind=facture.montantDu />
+                </td>
+            </tr>
+            <br />
+            <tr>
+                <td>
+                    <label for="montantRegle"> Montant Réglé </label>
+                </td>
+                <td>
+                    <input type="number" @bind=facture.montantRegle />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <input type="submit" class="btn btn-dark" value="Save" />
+</EditForm>
+@code {
+
+    DateTime dateNow = DateTime.Now;
+    FactureDTO facture = new FactureDTO();
+
+    string LastSubmitResult;
+
+    protected async Task CreateFacture()
+    {
+        await http.SendJsonAsync(HttpMethod.Post, "/api/factures", facture);
+        await http.
+
+    }
+
+    void ValidFormSubmitted(EditContext editContext)
+    {
+        LastSubmitResult = "Formulaire Valide !";
+        CreateFacture();
+    }
+    void InvalidFormSubmitted(EditContext editContext)
+    {
+        LastSubmitResult = "Formulaire Invalide !";
+
+    }
+
+    private void validFac()
+    {
+        @*data.addFac();*@
+    }
+}
+
+
+

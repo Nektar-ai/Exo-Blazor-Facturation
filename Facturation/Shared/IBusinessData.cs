@@ -7,7 +7,10 @@ namespace Facturation.Shared
 {
     public interface IBusinessData
     {
-        IEnumerable<Facture> Factures { get; } 
+        IEnumerable<Facture> Factures { get; }
+        /*IEnumerable<FactureDTO> FacturesDTO { get; }*/
         IEnumerable<ChiffreAffaire> CAs { get; }
+
+        void addFac(FactureDTO f);
     }
 }
